@@ -1,6 +1,7 @@
 import React from 'react';
 import Header from '../components/Header';
 import { Box, Button, Typography, useTheme, useMediaQuery } from '@mui/material';
+import About from './About';
 
 const Home = () => {
   const theme = useTheme();
@@ -84,6 +85,7 @@ const Home = () => {
     }}>
       <Header />
       {renderContents()}
+      <About />
     </Box>
   );
 };
