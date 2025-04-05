@@ -14,7 +14,6 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import Divider from '@mui/material/Divider';
-import CloseIcon from '@mui/icons-material/Close';
 
 const navItems = ['Home', 'About', 'Projects', 'Contact'];
 
@@ -45,12 +44,12 @@ const Header = () => {
               sx={{
                 py: 2,
                 '&:hover': {
-                  background: 'rgba(255, 255, 255, 0.08)'
+                  background: 'rgba(255, 255, 255, 0.08)',
                 }
               }}
             >
               <ListItemText 
-                primary={item} 
+                primary={item}
                 primaryTypographyProps={{ 
                   color: 'text.primary',
                   fontWeight: 'medium',
@@ -89,8 +88,8 @@ const Header = () => {
               <MenuIcon />
             </IconButton>
           )}
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1, color: '#ffffff' }}>
-            Umanga Shrestha
+          <Typography variant="h5" component="div" sx={{ flexGrow: 1, color: '#ffffff' }} fontFamily="Space Grotesk">
+            UMANGA SHRESTHA
           </Typography>
           {!isMobile && (
             <Box sx={{ display: 'flex' }}>
