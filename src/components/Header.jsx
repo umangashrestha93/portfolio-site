@@ -31,7 +31,7 @@ const Header = () => {
       sx={{ 
         width: { xs: '100%', sm: 280 },
         height: '100vh',
-        background: 'linear-gradient(to bottom, #1a1a1a, #2d2d2d)',
+        background: '#F7F7F7',
         display: 'flex',
         flexDirection: 'column'
       }}
@@ -44,7 +44,7 @@ const Header = () => {
               sx={{
                 py: 2,
                 '&:hover': {
-                  background: 'rgba(255, 255, 255, 0.08)',
+                  background: 'rgba(155, 148, 148, 0.1)', // Subtle hover effect
                 }
               }}
             >
@@ -54,11 +54,11 @@ const Header = () => {
                   color: 'text.primary',
                   fontWeight: 'medium',
                   textAlign: 'center',
-                  sx: { color: '#ffffff' }
+                  color: '#000000'
                 }} 
               />
             </ListItemButton>
-            <Divider sx={{ borderColor: 'rgba(255, 255, 255, 0.08)' }} />
+            <Divider sx={{ borderColor: 'rgba(255, 255, 255, 0.1)' }} />
           </ListItem>
         ))}
       </List>
@@ -70,7 +70,7 @@ const Header = () => {
       <AppBar 
         position="fixed" 
         sx={{ 
-          background: 'linear-gradient(to right, #000000, #434343)',
+          background: '#F7F7F7',
           zIndex: (theme) => theme.zIndex.drawer + 1,
           py: 0.8
         }}
@@ -82,13 +82,13 @@ const Header = () => {
               edge="start"
               color="inherit"
               aria-label="menu"
-              sx={{ mr: 2 }}
+              sx={{ mr: 2, color: '#000000' }}
               onClick={handleDrawerToggle}
             >
               <MenuIcon />
             </IconButton>
           )}
-          <Typography variant="h5" component="div" sx={{ flexGrow: 1, color: '#ffffff' }} fontFamily="Space Grotesk">
+          <Typography variant="h5" component="div" sx={{ flexGrow: 1, color: '#000000', fontWeight: 'bold' }} fontFamily="Space Grotesk">
             UMANGA SHRESTHA
           </Typography>
           {!isMobile && (
@@ -98,9 +98,11 @@ const Header = () => {
                   key={item} 
                   sx={{
                     mx: 1,
-                    color: '#ffffff',
+                    color: '#000000',
+                    fontWeight: 'bold',
+                    fontSize: '20px',
                     '&:hover': {
-                      backgroundColor: 'rgba(255, 255, 255, 0.1)'
+                      backgroundColor: 'rgba(155, 148, 148, 0.1)',
                     }
                   }}
                 >

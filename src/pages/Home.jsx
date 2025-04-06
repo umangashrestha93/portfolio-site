@@ -2,6 +2,8 @@ import React from 'react';
 import Header from '../components/Header';
 import { Box, Button, Typography, useTheme, useMediaQuery } from '@mui/material';
 import About from './About';
+import backgroundImage from '../assets/images/back.jpg';
+import Projects from './Projects';
 
 const Home = () => {
   const theme = useTheme();
@@ -9,26 +11,29 @@ const Home = () => {
 
   const renderContents = () => {
     return (
-      <Box sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: { xs: 'center', md: 'flex-start' },
-        justifyContent: 'center',
-        minHeight: `calc(100vh - 80px)`,
-        px: { xs: 3, sm: 5, md: 10 },
-        py: { xs: 4, md: 0 },
-        maxWidth: '1000px',
-        marginLeft: 10
-      }}>
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: { xs: 'center', md: 'flex-start' },
+          justifyContent: 'center',
+          minHeight: `calc(100vh - 80px)`,
+          px: { xs: 3, sm: 5, md: 10 },
+          py: { xs: 4, md: 0 },
+          maxWidth: '1000px',
+          marginLeft: {md: 10, xs:0},
+          marginTop: { xs: 10, md: 0},
+        }}
+      >
         <Box sx={{ mb: 4 }}>
           <Typography
             variant={isMobile ? 'h3' : 'h2'}
             component="h1"
             sx={{
               fontWeight: 700,
-              color: theme.palette.text.primary,
+              color: '#f5f5f5',
               lineHeight: 1.2,
-              mb: 2
+              mb: 2,
             }}
             fontFamily="Space Grotesk"
           >
@@ -40,8 +45,8 @@ const Home = () => {
             component="p"
             sx={{
               maxWidth: '600px',
-              color: theme.palette.text.secondary,
-              lineHeight: 1.6
+              color: '#e0e0e0',
+              lineHeight: 1.6,
             }}
             fontFamily="Space Grotesk"
           >
@@ -54,38 +59,48 @@ const Home = () => {
           variant="contained"
           size={isMobile ? 'medium' : 'large'}
           sx={{
-            backgroundColor: '#2D2D2D',
-            color: '#FFFFFF',
+            backgroundColor: '#2D336B',
+            color: 'white',
             px: 4,
             py: 1.5,
             borderRadius: '8px',
             fontWeight: 600,
-            fontFamily: "Space Grotesk",
+            fontFamily: 'Space Grotesk',
             '&:hover': {
-              backgroundColor: '#434343',
+              backgroundColor: '#F7F7F7',
               transform: 'translateY(-2px)',
-              boxShadow: '0 4px 8px rgba(0,0,0,0.2)'
+              boxShadow: '0 4px 8px rgba(2, 29, 48, 0.3)',
             },
-            transition: 'all 0.3s ease'
+            transition: 'all 0.3s ease',
           }}
         >
           View My Projects
         </Button>
       </Box>
-    )
-  }
+    );
+  };
 
   return (
-    <Box sx={{
-      // minHeight: '100vh',
-      backgroundColor: '#F8F4E1',
-      overflowX: 'hidden',
-      padding: 0,
-      margin: 0,
-    }}>
+    <Box
+      sx={{
+        minHeight: '100vh',
+        backgroundImage: `url(${backgroundImage})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+        backgroundAttachment: 'fixed',
+        overflowX: 'hidden',
+        padding: 0,
+        margin: 0,
+        imageRendering: 'optimizeQuality',
+      }}
+    >
       <Header />
       {renderContents()}
-      <About />
+      <Box sx={{ marginTop: 4}}>
+        <About />
+      </Box>
+      <Projects />
     </Box>
   );
 };
