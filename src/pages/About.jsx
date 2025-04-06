@@ -22,7 +22,7 @@ const About = () => {
     <Box
       sx={{
         backgroundColor: '#F7F7F7',
-        py: { xs: 5, md: 22 },
+        py: { xs: 5, md: 15 },
       }}
     >
       <Container maxWidth="xl">
@@ -60,6 +60,7 @@ const About = () => {
             lineHeight: 1.8,
             fontSize: isMobile ? '16px' : '18px',
             fontFamily: 'Space Grotesk',
+            marginBottom: 10
           }}
         >
           Here you will find more information about me, what I do, and my current skills mostly in terms of programming and technology.
@@ -70,6 +71,7 @@ const About = () => {
             display: 'flex',
             flexDirection: isMobile ? 'column' : 'row',
             gap: 6,
+            marginBottom: 30
           }}
         >
 

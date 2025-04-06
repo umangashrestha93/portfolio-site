@@ -3,6 +3,11 @@ import { ChevronLeft, ChevronRight, GitHub, Launch } from '@mui/icons-material';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import React, { useRef, useState, useCallback } from 'react';
 import portfolioImage from '../assets/images/Portfolio.png';
+import travelImage from '../assets/images/travel.png';
+import cameraImage from '../assets/images/camera.png';
+import ecommerceImage from '../assets/images/ecommerce.png';
+import foodImage from '../assets/images/food.png';
+import todoImage from '../assets/images/todo.png';
 
 const ProjectCard = React.memo(({ project, index, isMobile }) => {
   const [isHovered, setIsHovered] = useState(false);
@@ -57,9 +62,9 @@ const ProjectCard = React.memo(({ project, index, isMobile }) => {
               }}
               sx={{
                 position: 'absolute',
-                width: '100%',
-                height: '100%',
-                objectFit: 'cover',
+                width: project.isMobile ? '100%' : '100%',
+                height: project.isMobile ? '100%' : '122%',
+                objectFit: project.isMobile ?  'contain' : 'cover',
                 objectPosition: 'center',
                 transition: 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
                 transform: isHovered && !isMobile ? 'scale(1.05)' : 'scale(1)',
@@ -85,33 +90,70 @@ const ProjectCard = React.memo(({ project, index, isMobile }) => {
           flexGrow: 1,
           px: { xs: 2, sm: 3 },
           py: { xs: 2, sm: 2.5 },
-          '&:last-child': { pb: { xs: 2, sm: 2.5 } }
+          '&:last-child': { pb: { xs: 2, sm: 2.5 } },
+          display: 'flex',
+          flexDirection: 'column',
+          overflow: 'hidden'
         }}>
-          <Typography variant="h6" fontWeight="700" gutterBottom sx={{
-            fontSize: { xs: '1.1rem', sm: '1.2rem' },
-            color: theme.palette.text.primary
-          }}>
+          <Typography
+            variant="h6"
+            fontWeight="700"
+            gutterBottom
+            sx={{
+              fontSize: { xs: '1.1rem', sm: '1.2rem' },
+              color: theme.palette.text.primary,
+              wordBreak: 'break-word'
+            }}
+          >
             {project.title}
           </Typography>
-          <Typography variant="body2" color="text.secondary" sx={{
-            mb: 2,
-            fontSize: { xs: '0.875rem', sm: '0.9375rem' },
-            minHeight: { xs: '60px', sm: '70px' }
-          }}>
+
+          <Typography
+            variant="body2"
+            color="text.secondary"
+            sx={{
+              mb: 2,
+              fontSize: { xs: '0.875rem', sm: '0.9375rem' },
+              minHeight: { xs: '60px', sm: '70px' },
+              whiteSpace: 'normal',
+              overflowWrap: 'break-word',
+              wordBreak: 'break-word',
+              display: '-webkit-box',
+              WebkitBoxOrient: 'vertical',
+              WebkitLineClamp: 3,
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              lineHeight: 1.5
+            }}
+          >
             {project.description}
           </Typography>
 
-          <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, mt: 'auto' }}>
+          <Box sx={{
+            display: 'flex',
+            flexWrap: 'wrap',
+            gap: 1,
+            mt: 'auto',
+            alignSelf: 'flex-start'
+          }}>
             {project.technologies?.map((tech, i) => (
               <Chip
                 key={i}
                 label={tech}
                 size="small"
                 sx={{
-                  backgroundColor: theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.08)',
+                  backgroundColor: theme.palette.mode === 'dark'
+                    ? 'rgba(255,255,255,0.1)'
+                    : 'rgba(0,0,0,0.08)',
                   color: theme.palette.text.secondary,
                   fontSize: '0.7rem',
-                  height: '24px'
+                  height: '24px',
+                  maxWidth: '100%',
+                  '& .MuiChip-label': {
+                    whiteSpace: 'nowrap',
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis'
+                  }
                 }}
               />
             ))}
@@ -136,43 +178,46 @@ const Projects = () => {
       imageUrl: portfolioImage,
       liveUrl: '#',
       githubUrl: '#',
-      technologies: ['React', 'Material UI', 'Framer Motion', 'Responsive']
+      technologies: ['HTML', 'CSS', 'JAVASCRIPT']
     },
     {
-      title: 'Task Management App',
+      title: 'Tour Managemnet System',
       description: 'Productivity application with team collaboration features and progress tracking.',
-      imageUrl: 'https://source.unsplash.com/random/600x400/?tasks',
+      imageUrl: travelImage,
       liveUrl: '#',
       githubUrl: '#',
-      technologies: ['React', 'Firebase', 'Redux']
+      technologies: ['HTML', 'CSS', 'JAVASCRIPT', 'DJANGO']
     },
     {
-      title: 'Health & Fitness Tracker',
+      title: 'CAMERA RENTAL SYSTEM',
       description: 'Mobile-first application for tracking workouts and nutrition with data visualization.',
-      imageUrl: 'https://source.unsplash.com/random/600x400/?fitness',
+      imageUrl: cameraImage,
       liveUrl: '#',
-      technologies: ['React Native', 'GraphQL', 'Chart.js']
+      technologies: ['REACT J.S', 'TAILWIND CSS', 'NODE J.S', 'MONGO DB']
     },
     {
-      title: 'Social Media Dashboard',
+      title: 'Ecommerce Mobile App',
       description: 'Analytics dashboard for social media managers with real-time metrics.',
-      imageUrl: 'https://source.unsplash.com/random/600x400/?dashboard',
+      imageUrl: ecommerceImage,
       githubUrl: '#',
-      technologies: ['Next.js', 'Tailwind CSS', 'API']
+      technologies: ['REACT NATIVE'],
+      isMobile: true
     },
     {
-      title: 'Travel Planning Tool',
+      title: 'FOOD APP',
       description: 'Interactive map-based application for itinerary planning and destination discovery.',
-      imageUrl: 'https://source.unsplash.com/random/600x400/?travel',
+      imageUrl: foodImage,
       liveUrl: '#',
-      technologies: ['React', 'Mapbox', 'Node.js']
+      technologies: ['REACT NATIVE'],
+      isMobile: true
     },
     {
-      title: 'Learning Management System',
+      title: 'To Do List',
       description: 'Online education platform with course creation and student progress tracking.',
-      imageUrl: 'https://source.unsplash.com/random/600x400/?education',
+      imageUrl: todoImage,
       githubUrl: '#',
-      technologies: ['MERN Stack', 'JWT', 'MongoDB']
+      technologies: ['REACT NATIVE'],
+      isMobile: true
     },
   ];
 
@@ -206,7 +251,7 @@ const Projects = () => {
       id="projects"
       sx={{
         backgroundColor: theme.palette.background.default,
-        padding: { xs: 3, sm: 6, md: 8 },
+        padding: { xs: 3, sm: 6, md: 15 },
         position: 'relative',
         overflow: 'hidden',
       }}
