@@ -4,6 +4,7 @@ import { Box, Button, Typography, useTheme, useMediaQuery } from '@mui/material'
 import About from './About';
 import backgroundImage from '../assets/images/back.jpg';
 import Projects from './Projects';
+import Contact from './Contact';
 
 const Home = () => {
   const theme = useTheme();
@@ -101,6 +102,7 @@ const Home = () => {
         <About />
       </Box>
       <Projects />
+      <Contact />
     </Box>
   );
 };
