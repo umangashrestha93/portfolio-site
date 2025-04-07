@@ -2,7 +2,7 @@ import { Box, Container, Typography, Card, CardMedia, CardContent, IconButton, B
 import { ChevronLeft, ChevronRight, GitHub, Launch } from '@mui/icons-material';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import React, { useRef, useState, useCallback } from 'react';
-import portfolioImage from '../assets/images/Portfolio.png';
+import portfolioImage from '../assets/images/portfolio.png';
 import travelImage from '../assets/images/travel.png';
 import cameraImage from '../assets/images/camera.png';
 import ecommerceImage from '../assets/images/ecommerce.png';

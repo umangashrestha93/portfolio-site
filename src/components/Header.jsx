@@ -51,7 +51,6 @@ const Header = () => {
               <ListItemText 
                 primary={item}
                 primaryTypographyProps={{ 
-                  color: 'text.primary',
                   fontWeight: 'medium',
                   textAlign: 'center',
                   color: '#000000'
