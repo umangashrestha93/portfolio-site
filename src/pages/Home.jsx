@@ -5,6 +5,7 @@ import About from './About';
 import backgroundImage from '../assets/images/back.jpg';
 import Projects from './Projects';
 import Contact from './Contact';
+import Footer from '../components/Footer';
 
 const Home = () => {
   const theme = useTheme();
@@ -103,6 +104,7 @@ const Home = () => {
       </Box>
       <Projects />
       <Contact />
+      <Footer />
     </Box>
   );
 };
