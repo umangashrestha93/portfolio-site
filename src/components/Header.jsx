@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -14,8 +13,15 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import Divider from '@mui/material/Divider';
+import { Link as ScrollLink } from 'react-scroll';
+import profileImage from '../assets/images/umangaaa.jpg';
 
-const navItems = ['Home', 'About', 'Projects', 'Contact'];
+const navItems = [
+  { name: 'Home', id: 'home-section' },
+  { name: 'About', id: 'about-section' },
+  { name: 'Projects', id: 'projects-section' },
+  { name: 'Contact', id: 'contact-section' }
+];
 
 const Header = () => {
   const theme = useTheme();
@@ -24,6 +30,16 @@ const Header = () => {
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
+  };
+
+  const handleNavClick = (id) => {
+    if (id === 'home-section') {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    }
+    setMobileOpen(false);
   };
 
   const drawer = (
@@ -39,24 +55,55 @@ const Header = () => {
       <Box sx={{ padding: 5}}></Box>
       <List sx={{ flexGrow: 1 }}>
         {navItems.map((item) => (
-          <ListItem key={item} disablePadding>
-            <ListItemButton 
-              sx={{
-                py: 2,
-                '&:hover': {
-                  background: 'rgba(155, 148, 148, 0.1)', // Subtle hover effect
-                }
-              }}
-            >
-              <ListItemText 
-                primary={item}
-                primaryTypographyProps={{ 
-                  fontWeight: 'medium',
-                  textAlign: 'center',
-                  color: '#000000'
-                }} 
-              />
-            </ListItemButton>
+          <ListItem key={item.id} disablePadding>
+            {item.id === 'home-section' ? (
+              <ListItemButton 
+                onClick={() => handleNavClick(item.id)}
+                sx={{
+                  py: 2,
+                  '&:hover': {
+                    background: 'rgba(155, 148, 148, 0.1)',
+                  }
+                }}
+              >
+                <ListItemText 
+                  primary={item.name}
+                  primaryTypographyProps={{ 
+                    fontWeight: 'medium',
+                    textAlign: 'center',
+                    color: '#000000'
+                  }} 
+                />
+              </ListItemButton>
+            ) : (
+              <ScrollLink
+                to={item.id}
+                spy={true}
+                smooth={true}
+                duration={500}
+                offset={-70}
+                onClick={() => handleNavClick(item.id)}
+                style={{ width: '100%' }}
+              >
+                <ListItemButton 
+                  sx={{
+                    py: 2,
+                    '&:hover': {
+                      background: 'rgba(155, 148, 148, 0.1)',
+                    }
+                  }}
+                >
+                  <ListItemText 
+                    primary={item.name}
+                    primaryTypographyProps={{ 
+                      fontWeight: 'medium',
+                      textAlign: 'center',
+                      color: '#000000'
+                    }} 
+                  />
+                </ListItemButton>
+              </ScrollLink>
+            )}
             <Divider sx={{ borderColor: 'rgba(255, 255, 255, 0.1)' }} />
           </ListItem>
         ))}
@@ -87,26 +134,75 @@ const Header = () => {
               <MenuIcon />
             </IconButton>
           )}
-          <Typography variant="h5" component="div" sx={{ flexGrow: 1, color: '#000000', fontWeight: 'bold' }} fontFamily="Space Grotesk">
-            UMANGA SHRESTHA
-          </Typography>
+
+          <Box
+            onClick={() => handleNavClick('home-section')}
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              flexGrow: isMobile ? 0 : 1,
+              justifyContent: 'flex-start',
+              cursor: 'pointer'
+            }}
+          >
+            <Box
+              component="img"
+              src={profileImage}
+              alt="Profile"
+              sx={{
+                height: { xs: 40, sm: 50, md: 60 },
+                width: { xs: 40, sm: 50, md: 60 },
+                borderRadius: '50%',
+                objectFit: 'cover',
+                border: '2px solid #e0e0e0',
+                boxShadow: 1,
+                mr: isMobile ? 2 : 0
+              }}
+            />
+          </Box>
           {!isMobile && (
             <Box sx={{ display: 'flex' }}>
               {navItems.map((item) => (
-                <Button 
-                  key={item} 
-                  sx={{
-                    mx: 1,
-                    color: '#000000',
-                    fontWeight: 'bold',
-                    fontSize: '20px',
-                    '&:hover': {
-                      backgroundColor: 'rgba(155, 148, 148, 0.1)',
-                    }
-                  }}
-                >
-                  {item}
-                </Button>
+                item.id === 'home-section' ? (
+                  <Button 
+                    key={item.id}
+                    onClick={() => handleNavClick(item.id)}
+                    sx={{
+                      mx: 1,
+                      color: '#000000',
+                      fontWeight: 'bold',
+                      fontSize: '20px',
+                      '&:hover': {
+                        backgroundColor: 'rgba(155, 148, 148, 0.1)',
+                      }
+                    }}
+                  >
+                    {item.name}
+                  </Button>
+                ) : (
+                  <ScrollLink
+                    key={item.id}
+                    to={item.id}
+                    spy={true}
+                    smooth={true}
+                    duration={500}
+                    offset={-70}
+                  >
+                    <Button 
+                      sx={{
+                        mx: 1,
+                        color: '#000000',
+                        fontWeight: 'bold',
+                        fontSize: '20px',
+                        '&:hover': {
+                          backgroundColor: 'rgba(155, 148, 148, 0.1)',
+                        }
+                      }}
+                    >
+                      {item.name}
+                    </Button>
+                  </ScrollLink>
+                )
               ))}
             </Box>
           )}

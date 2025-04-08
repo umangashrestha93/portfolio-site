@@ -1,7 +1,7 @@
-import { Box, Container, Typography, Card, CardMedia, CardContent, IconButton, Button, Chip, useTheme, useMediaQuery } from '@mui/material';
-import { ChevronLeft, ChevronRight, GitHub, Launch } from '@mui/icons-material';
+import { Box, Container, Typography, Card, CardMedia, CardContent, IconButton, Chip, useTheme, useMediaQuery } from '@mui/material';
+import { ChevronLeft, ChevronRight } from '@mui/icons-material';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import React, { useRef, useState, useCallback } from 'react';
+import React, { useRef, useState, useCallback, useEffect } from 'react';
 import portfolioImage from '../assets/images/portfolio.png';
 import travelImage from '../assets/images/travel.png';
 import cameraImage from '../assets/images/camera.png';
@@ -56,21 +56,17 @@ const ProjectCard = React.memo(({ project, index, isMobile }) => {
               image={project.imageUrl}
               alt={project.title}
               loading="lazy"
-              onLoad={(e) => {
-                // Force high quality rendering after load
-                e.target.style.imageRendering = 'auto';
-              }}
+              decoding="async"
               sx={{
                 position: 'absolute',
                 width: project.isMobile ? '100%' : '100%',
                 height: project.isMobile ? '100%' : '122%',
-                objectFit: project.isMobile ?  'contain' : 'cover',
+                objectFit: project.isMobile ? 'contain' : 'cover',
                 objectPosition: 'center',
                 transition: 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
                 transform: isHovered && !isMobile ? 'scale(1.05)' : 'scale(1)',
                 filter: isHovered ? 'brightness(0.7)' : 'brightness(1)',
                 willChange: 'transform, filter',
-                imageRendering: 'optimizeQuality',
                 backfaceVisibility: 'hidden',
                 transformStyle: 'preserve-3d'
               }}
@@ -168,38 +164,33 @@ const Projects = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const scrollContainerRef = useRef(null);
+  const projectsSectionRef = useRef(null);
   const [showLeftArrow, setShowLeftArrow] = useState(false);
   const [showRightArrow, setShowRightArrow] = useState(true);
 
-  const projects = [
+  const projects = React.useMemo(() => [
     {
       title: 'My Portfolio Site',
       description: 'A modern, responsive portfolio website showcasing my work and skills with smooth animations.',
       imageUrl: portfolioImage,
-      liveUrl: '#',
-      githubUrl: '#',
       technologies: ['HTML', 'CSS', 'JAVASCRIPT']
     },
     {
       title: 'Tour Managemnet System',
       description: 'Productivity application with team collaboration features and progress tracking.',
       imageUrl: travelImage,
-      liveUrl: '#',
-      githubUrl: '#',
       technologies: ['HTML', 'CSS', 'JAVASCRIPT', 'DJANGO']
     },
     {
       title: 'CAMERA RENTAL SYSTEM',
       description: 'Mobile-first application for tracking workouts and nutrition with data visualization.',
       imageUrl: cameraImage,
-      liveUrl: '#',
       technologies: ['REACT J.S', 'TAILWIND CSS', 'NODE J.S', 'MONGO DB']
     },
     {
       title: 'Ecommerce Mobile App',
       description: 'Analytics dashboard for social media managers with real-time metrics.',
       imageUrl: ecommerceImage,
-      githubUrl: '#',
       technologies: ['REACT NATIVE'],
       isMobile: true
     },
@@ -207,7 +198,6 @@ const Projects = () => {
       title: 'FOOD APP',
       description: 'Interactive map-based application for itinerary planning and destination discovery.',
       imageUrl: foodImage,
-      liveUrl: '#',
       technologies: ['REACT NATIVE'],
       isMobile: true
     },
@@ -215,11 +205,10 @@ const Projects = () => {
       title: 'To Do List',
       description: 'Online education platform with course creation and student progress tracking.',
       imageUrl: todoImage,
-      githubUrl: '#',
       technologies: ['REACT NATIVE'],
       isMobile: true
     },
-  ];
+  ], []);
 
   const checkScrollPosition = useCallback(() => {
     if (scrollContainerRef.current) {
@@ -235,7 +224,9 @@ const Projects = () => {
         left: scrollOffset,
         behavior: 'smooth'
       });
-      setTimeout(checkScrollPosition, 500);
+      requestAnimationFrame(() => {
+        setTimeout(checkScrollPosition, 500);
+      });
     }
   }, [checkScrollPosition]);
 
@@ -245,15 +236,36 @@ const Projects = () => {
 
   const opacityRange = useTransform(scrollXProgress, [0, 0.05, 0.95, 1], [0, 1, 1, 0]);
 
+  useEffect(() => {
+    const handleHashChange = () => {
+      if (window.location.hash === '#projects-section' && projectsSectionRef.current) {
+        window.scrollTo({
+          top: projectsSectionRef.current.offsetTop - 20,
+          behavior: 'smooth'
+        });
+      }
+    };
+
+    handleHashChange();
+
+    window.addEventListener('hashchange', handleHashChange);
+
+    return () => {
+      window.removeEventListener('hashchange', handleHashChange);
+    };
+  }, []);
+
   return (
     <Box
       component="section"
-      id="projects"
+      id="projects-section"
+      ref={projectsSectionRef}
       sx={{
         backgroundColor: theme.palette.background.default,
         padding: { xs: 3, sm: 6, md: 15 },
         position: 'relative',
         overflow: 'hidden',
+        scrollMarginTop: '20px'
       }}
     >
       <Container maxWidth="xl">
@@ -285,7 +297,7 @@ const Projects = () => {
           </Typography>
         </motion.div>
 
-        <Box sx={{ position: 'relative' }}>
+        <Box sx={{ position: 'relative', marginBottom: 20 }}>
           {showLeftArrow && (
             <motion.div
               initial={{ opacity: 0 }}
@@ -326,6 +338,8 @@ const Projects = () => {
               py: 2,
               px: { xs: 0, sm: 4 },
               mx: { xs: -2, sm: 0 },
+              willChange: 'scroll-position',
+              overscrollBehavior: 'contain'
             }}
           >
             <Box
@@ -385,4 +399,4 @@ const Projects = () => {
   );
 };
 
-export default Projects;
+export default React.memo(Projects);

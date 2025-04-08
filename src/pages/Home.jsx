@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { lazy, Suspense } from 'react';
 import Header from '../components/Header';
 import { Box, Button, Typography, useTheme, useMediaQuery } from '@mui/material';
-import About from './About';
-import backgroundImage from '../assets/images/back.jpg';
-import Projects from './Projects';
-import Contact from './Contact';
 import Footer from '../components/Footer';
+
+const About = lazy(() => import('./About'));
+const Projects = lazy(() => import('./Projects'));
+const Contact = lazy(() => import('./Contact'));
 
 const Home = () => {
   const theme = useTheme();
@@ -13,29 +13,27 @@ const Home = () => {
 
   const renderContents = () => {
     return (
-      <Box
-        sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: { xs: 'center', md: 'flex-start' },
-          justifyContent: 'center',
-          minHeight: `calc(100vh - 80px)`,
-          px: { xs: 3, sm: 5, md: 10 },
-          py: { xs: 4, md: 0 },
-          maxWidth: '1000px',
-          marginLeft: {md: 10, xs:0},
-          marginTop: { xs: 10, md: 0},
-        }}
-      >
+      <Box sx={{ 
+        display: 'flex', 
+        flexDirection: 'column', 
+        alignItems: { xs: 'center', md: 'flex-start' }, 
+        justifyContent: 'center', 
+        minHeight: `calc(100vh - 80px)`, 
+        px: { xs: 3, sm: 5, md: 10 }, 
+        py: { xs: 4, md: 0 }, 
+        maxWidth: '1000px', 
+        marginLeft: {md: 10, xs: 0}, 
+        marginTop: { xs: 10, md: 0}, 
+      }}>
         <Box sx={{ mb: 4 }}>
-          <Typography
-            variant={isMobile ? 'h3' : 'h2'}
-            component="h1"
-            sx={{
-              fontWeight: 700,
-              color: '#f5f5f5',
-              lineHeight: 1.2,
-              mb: 2,
+          <Typography 
+            variant={isMobile ? 'h3' : 'h2'} 
+            component="h1" 
+            sx={{ 
+              fontWeight: 700, 
+              color: '#f5f5f5', 
+              lineHeight: 1.2, 
+              mb: 2, 
             }}
             fontFamily="Space Grotesk"
           >
@@ -61,7 +59,7 @@ const Home = () => {
           variant="contained"
           size={isMobile ? 'medium' : 'large'}
           sx={{
-            backgroundColor: '#2D336B',
+            background: 'linear-gradient(to right,rgb(83, 51, 101),rgb(53, 11, 104))',
             color: 'white',
             px: 4,
             py: 1.5,
@@ -69,12 +67,13 @@ const Home = () => {
             fontWeight: 600,
             fontFamily: 'Space Grotesk',
             '&:hover': {
-              backgroundColor: '#F7F7F7',
+              backgroundColor: '#213555',
               transform: 'translateY(-2px)',
               boxShadow: '0 4px 8px rgba(2, 29, 48, 0.3)',
             },
             transition: 'all 0.3s ease',
           }}
+          href="#projects"
         >
           View My Projects
         </Button>
@@ -83,30 +82,29 @@ const Home = () => {
   };
 
   return (
-    <Box
-      sx={{
-        minHeight: '100vh',
-        backgroundImage: `url(${backgroundImage})`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat',
-        backgroundAttachment: 'fixed',
-        overflowX: 'hidden',
-        padding: 0,
-        margin: 0,
-        imageRendering: 'optimizeQuality',
-      }}
-    >
+    <Box id= 'home-section' sx={{ 
+      minHeight: '100vh',
+      background: 'linear-gradient(to right,rgb(83, 51, 101),rgb(53, 11, 104))',
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
+      backgroundRepeat: 'no-repeat',
+      backgroundAttachment: 'fixed',
+      overflowX: 'hidden',
+    }}>
       <Header />
       {renderContents()}
-      <Box sx={{ marginTop: 4}}>
-        <About />
-      </Box>
-      <Projects />
-      <Contact />
+      
+      <Suspense fallback={<div>Loading...</div>}>
+        <Box sx={{ marginTop: 4}} id="about">
+          <About />
+        </Box>
+        <Projects />
+        <Contact />
+      </Suspense>
+      
       <Footer />
     </Box>
   );
 };
 
-export default Home;
+export default React.memo(Home);

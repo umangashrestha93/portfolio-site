@@ -15,6 +15,7 @@ const Contact = () => {
 
   return (
     <Box 
+      id='contact-section'
       component="section" 
       sx={{ 
         width: '100%',
@@ -28,7 +29,8 @@ const Contact = () => {
           left: 0,
           right: 0,
           bottom: 0,
-          backgroundImage: `url(${contactImage})`,
+          // backgroundImage: `url(${contactImage})`,
+          background: 'linear-gradient(to right, #16404D, #2A5E6A)',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',
@@ -165,7 +167,7 @@ const Contact = () => {
                 fontSize: isMobile ? '1.1rem' : '1.3rem',
                 fontWeight: 'bold',
                 letterSpacing: 1.1,
-                backgroundColor: '#336D82'
+                background: 'linear-gradient(to right, #16404D, #2A5E6A)'
               }}
             >
               Submit

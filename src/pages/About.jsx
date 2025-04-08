@@ -7,7 +7,9 @@ import {
   Chip,
   Grid,
   Container,
+  Button,
 } from '@mui/material';
+import resume from '../assets/resume/UmangaStha.pdf'
 
 const About = () => {
   const theme = useTheme();
@@ -18,8 +20,17 @@ const About = () => {
     'Next.js', 'Java', 'Git & GitHub'
   ];
 
+  const handleDownload = () => {
+    const link = document.createElement('a');
+    link.href = resume;
+    link.download = 'UmangaStha.pdf';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   return (
-    <Box
+    <Box id='about-section'
       sx={{
         backgroundColor: '#F7F7F7',
         py: { xs: 5, md: 15 },
@@ -71,7 +82,7 @@ const About = () => {
             display: 'flex',
             flexDirection: isMobile ? 'column' : 'row',
             gap: 6,
-            marginBottom: 30
+            marginBottom: isMobile ? 8 : 30
           }}
         >
 
@@ -98,6 +109,31 @@ const About = () => {
               I have worked on real-world projects like delivery apps, admin dashboards, and e-commerce platforms.
               I focus on delivering responsive, intuitive UIs while continuously learning and adapting to new technologies.
             </Typography>
+
+            <Box sx={{ marginTop: 5}}>
+              <Button
+                variant="contained"
+                size={isMobile ? 'medium' : 'large'}
+                sx={{
+                  background: 'linear-gradient(to right,rgb(83, 51, 101),rgb(53, 11, 104))',
+                  color: 'white',
+                  px: 6,
+                  py: 2,
+                  borderRadius: '8px',
+                  fontWeight: 600,
+                  fontFamily: 'Space Grotesk',
+                  '&:hover': {
+                    backgroundColor: '#213555',
+                    transform: 'translateY(-2px)',
+                    boxShadow: '0 4px 8px rgba(2, 29, 48, 0.3)',
+                  },
+                  transition: 'all 0.3s ease',
+                }}
+                onClick={handleDownload}
+              >
+                Download Resume
+              </Button>
+            </Box>
           </Box>
 
 
