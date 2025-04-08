@@ -73,7 +73,12 @@ const Home = () => {
             },
             transition: 'all 0.3s ease',
           }}
-          href="#projects"
+          onClick={() => {
+            const element = document.getElementById('projects-section');
+            if (element) {
+              element.scrollIntoView({ behavior: 'smooth' });
+            }
+          }}
         >
           View My Projects
         </Button>
@@ -98,7 +103,10 @@ const Home = () => {
         <Box sx={{ marginTop: 4}} id="about">
           <About />
         </Box>
-        <Projects />
+        <Box id="projects-section">
+          <Projects />
+
+        </Box>
         <Contact />
       </Suspense>
       
