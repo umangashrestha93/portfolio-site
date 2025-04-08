@@ -171,39 +171,39 @@ const Projects = () => {
   const projects = React.useMemo(() => [
     {
       title: 'My Portfolio Site',
-      description: 'A modern, responsive portfolio website showcasing my work and skills with smooth animations.',
+      description: 'A modern, responsive portfolio website showcasing my work and skills.',
       imageUrl: portfolioImage,
       technologies: ['HTML', 'CSS', 'JAVASCRIPT']
     },
     {
       title: 'Tour Managemnet System',
-      description: 'Productivity application with team collaboration features and progress tracking.',
+      description: 'A Portal for a Travel and Tours Company that has a variety of tour details and packages on their website. Visitors can submit forms on the various Tour Pages to request tour packages.',
       imageUrl: travelImage,
       technologies: ['HTML', 'CSS', 'JAVASCRIPT', 'DJANGO']
     },
     {
       title: 'CAMERA RENTAL SYSTEM',
-      description: 'Mobile-first application for tracking workouts and nutrition with data visualization.',
+      description: 'Shutter scope is an online based web application with a moto to solve camera gear and equipment-based problems. Its goal is to provide an online platform for renting camera-based equipment.',
       imageUrl: cameraImage,
       technologies: ['REACT J.S', 'TAILWIND CSS', 'NODE J.S', 'MONGO DB']
     },
     {
       title: 'Ecommerce Mobile App',
-      description: 'Analytics dashboard for social media managers with real-time metrics.',
+      description: 'built ecommerce app using React Native.',
       imageUrl: ecommerceImage,
       technologies: ['REACT NATIVE'],
       isMobile: true
     },
     {
       title: 'FOOD APP',
-      description: 'Interactive map-based application for itinerary planning and destination discovery.',
+      description: 'Built food app UI with React Native.',
       imageUrl: foodImage,
       technologies: ['REACT NATIVE'],
       isMobile: true
     },
     {
       title: 'To Do List',
-      description: 'Online education platform with course creation and student progress tracking.',
+      description: 'built todo list with user details using react native',
       imageUrl: todoImage,
       technologies: ['REACT NATIVE'],
       isMobile: true
