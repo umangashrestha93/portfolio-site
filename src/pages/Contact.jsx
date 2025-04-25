@@ -1,23 +1,63 @@
-import React from 'react';
-import { 
+import React, { useState } from 'react';
+import {
   Box,
   Typography,
   TextField,
   Button,
   useTheme,
-  useMediaQuery
+  useMediaQuery,
+  CircularProgress
 } from '@mui/material';
-import contactImage from '../assets/images/contactImage.jpg';
+import { toast, ToastContainer } from 'react-toastify';
 
 const Contact = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const onSubmit = async (event) => {
+    event.preventDefault();
+    const form = event.target;
+    const formData = new FormData(form);
+
+    formData.append("access_key", "0687ce52-b3cd-4d91-a402-51c94c57f7b0");
+
+    const object = Object.fromEntries(formData);
+    const json = JSON.stringify(object);
+    setIsSubmitting(true)
+
+    try {
+      const res = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json"
+        },
+        body: json
+      });
+
+      const data = await res.json();
+
+      if (data.success) {
+        toast.success("Form Submitted Sucessfully!")
+        form.reset();
+      } else {
+        console.error("Submission error:", data);
+        toast.error("There was an error submitting the form. Please try again.")
+      }
+    } catch (error) {
+      console.error("Network error:", error);
+      toast.error("Network error. Please check your connection and try again.")
+    } finally {
+      setIsSubmitting(false)
+    }
+  };
 
   return (
-    <Box 
+    <Box
       id='contact-section'
-      component="section" 
-      sx={{ 
+      component="section"
+      sx={{
         width: '100%',
         py: 10,
         position: 'relative',
@@ -29,7 +69,6 @@ const Contact = () => {
           left: 0,
           right: 0,
           bottom: 0,
-          // backgroundImage: `url(${contactImage})`,
           background: 'linear-gradient(to right, #16404D, #2A5E6A)',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
@@ -48,21 +87,21 @@ const Contact = () => {
         backgroundColor: 'rgba(0, 0, 0, 0.4)',
         zIndex: 1
       }} />
-      
-      <Box sx={{ 
-        maxWidth: 1200, 
-        mx: 'auto', 
+
+      <Box sx={{
+        maxWidth: 1200,
+        mx: 'auto',
         px: isMobile ? 3 : 4,
         width: '100%',
         position: 'relative',
         zIndex: 2
       }}>
         <Box sx={{ textAlign: 'center', mb: 6 }}>
-          <Typography 
-            variant={isMobile ? 'h3' : 'h2'} 
-            component="h2" 
+          <Typography
+            variant={isMobile ? 'h3' : 'h2'}
+            component="h2"
             gutterBottom
-            sx={{ 
+            sx={{
               fontWeight: 'bold',
               fontSize: isMobile ? '2.5rem' : '3rem',
               color: 'common.white'
@@ -70,10 +109,10 @@ const Contact = () => {
           >
             Contact
           </Typography>
-          <Typography 
-            variant={isMobile ? 'h6' : 'h5'} 
-            sx={{ 
-              maxWidth: 700, 
+          <Typography
+            variant={isMobile ? 'h6' : 'h5'}
+            sx={{
+              maxWidth: 700,
               mx: 'auto',
               lineHeight: 1.6,
               color: 'rgba(255, 255, 255, 0.9)'
@@ -83,9 +122,10 @@ const Contact = () => {
           </Typography>
         </Box>
 
-        <Box 
-          component="form" 
-          sx={{ 
+        <Box
+          component="form"
+          onSubmit={onSubmit}
+          sx={{
             p: isMobile ? 4 : 6,
             borderRadius: 3,
             boxShadow: 3,
@@ -99,7 +139,7 @@ const Contact = () => {
             <TextField
               required
               fullWidth
-              id="name"
+              name="name"
               label="Name"
               variant="outlined"
               margin="normal"
@@ -118,7 +158,7 @@ const Contact = () => {
             <TextField
               required
               fullWidth
-              id="email"
+              name="email"
               label="Email"
               type="email"
               variant="outlined"
@@ -138,7 +178,7 @@ const Contact = () => {
             <TextField
               required
               fullWidth
-              id="message"
+              name="message"
               label="Message"
               multiline
               rows={isMobile ? 5 : 7}
@@ -161,20 +201,30 @@ const Contact = () => {
               fullWidth
               variant="contained"
               size="large"
-              sx={{ 
+              disabled={isSubmitting}
+              sx={{
                 py: 2,
                 mt: 3,
                 fontSize: isMobile ? '1.1rem' : '1.3rem',
                 fontWeight: 'bold',
                 letterSpacing: 1.1,
-                background: 'linear-gradient(to right, #16404D, #2A5E6A)'
+                background: 'linear-gradient(to right, #16404D, #2A5E6A)',
+                '&:disabled': {
+                  background: '#cccccc'
+                }
               }}
             >
-              Submit
+              {isSubmitting ? (
+                <CircularProgress size={24} color="inherit" />
+              ) : (
+                'Submit'
+              )}
             </Button>
+
           </Box>
         </Box>
       </Box>
+      <ToastContainer />
     </Box>
   );
 };
