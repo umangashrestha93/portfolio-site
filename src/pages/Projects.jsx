@@ -1,4 +1,4 @@
-import { Box, Container, Typography, Card, CardMedia, CardContent, IconButton, Chip, useTheme, useMediaQuery } from '@mui/material';
+import { Box, Container, Typography, Card, CardMedia, CardContent, IconButton, Chip, useTheme, useMediaQuery, Button } from '@mui/material';
 import { ChevronLeft, ChevronRight } from '@mui/icons-material';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import React, { useRef, useState, useCallback, useEffect } from 'react';
@@ -8,10 +8,40 @@ import cameraImage from '../assets/images/camera.png';
 import ecommerceImage from '../assets/images/ecommerce.png';
 import foodImage from '../assets/images/food.png';
 import todoImage from '../assets/images/todo.png';
+import squegg from '../assets/images/squegg.png';
+import msat from '../assets/images/msat.png';
 
 const ProjectCard = React.memo(({ project, index, isMobile }) => {
   const [isHovered, setIsHovered] = useState(false);
   const theme = useTheme();
+  console.log("project", project.appLink)
+  const renderButton = () => {
+    if (project.appLink == '') return;
+    return (
+      <Button
+          variant="contained"
+          size={isMobile ? 'medium' : 'large'}
+          sx={{
+            background: 'linear-gradient(to right,rgb(83, 51, 101),rgb(53, 11, 104))',
+            color: 'white',
+            px: 4,
+            py: 1.5,
+            borderRadius: '8px',
+            fontWeight: 600,
+            fontFamily: 'Space Grotesk',
+            '&:hover': {
+              backgroundColor: '#213555',
+              transform: 'translateY(-2px)',
+              boxShadow: '0 4px 8px rgba(2, 29, 48, 0.3)',
+            },
+            transition: 'all 0.3s ease',
+          }}
+          onClick={() => window.open(project.appLink, '_blank')}
+        >
+          App Link
+        </Button>
+    )
+  }
 
   return (
     <motion.div
@@ -154,6 +184,9 @@ const ProjectCard = React.memo(({ project, index, isMobile }) => {
               />
             ))}
           </Box>
+          <Box sx={{ marginTop: 5 }}>
+            { renderButton() }
+          </Box>
         </CardContent>
       </Card>
     </motion.div>
@@ -168,45 +201,74 @@ const Projects = () => {
   const [showLeftArrow, setShowLeftArrow] = useState(false);
   const [showRightArrow, setShowRightArrow] = useState(true);
 
+  const isAndroid = () => {
+    return /Android/i.test(navigator.userAgent);
+  };
+
+  const SqueggAppLink = isAndroid() ? 'https://play.google.com/store/apps/details?id=com.nudiao.squegg&hl=en' : 'https://apps.apple.com/us/app/squegg/id1438724856';
+
+  const MsatAppLink = isAndroid() ? "https://play.google.com/store/apps/details?id=com.abbothcp&hl=en" : "https://apps.apple.com/us/app/msat-muscle-strength-tool/id6444227788"
+  
+
   const projects = React.useMemo(() => [
+    {
+      title: 'My Squegg',
+      description: 'Squegg offers a medical device and connected app solution for assessment and monitoring of key upper extremity impairments including grip strength and pinch strength.',
+      imageUrl: squegg,
+      technologies: ['REACT NATIVE', 'JAVASCRIPT'],
+      appLink: SqueggAppLink
+    },
+    {
+      title: 'Muscle Strength Assessment Tool (MSAT)',
+      description: 'MSAT is a muscle strength assessment tool to measure grip strength and measure progress.',
+      imageUrl: msat,
+      technologies: ['REACT NATIVE', 'JAVASCRIPT'],
+      appLink: MsatAppLink
+    },
     {
       title: 'My Portfolio Site',
       description: 'A modern, responsive portfolio website showcasing my work and skills.',
       imageUrl: portfolioImage,
-      technologies: ['HTML', 'CSS', 'JAVASCRIPT']
+      technologies: ['HTML', 'CSS', 'JAVASCRIPT'],
+      appLink: ''
     },
     {
       title: 'Tour Managemnet System',
       description: 'A Portal for a Travel and Tours Company that has a variety of tour details and packages on their website. Visitors can submit forms on the various Tour Pages to request tour packages.',
       imageUrl: travelImage,
-      technologies: ['HTML', 'CSS', 'JAVASCRIPT', 'DJANGO']
+      technologies: ['HTML', 'CSS', 'JAVASCRIPT', 'DJANGO'],
+      appLink: ''
     },
     {
       title: 'CAMERA RENTAL SYSTEM',
       description: 'Shutter scope is an online based web application with a moto to solve camera gear and equipment-based problems. Its goal is to provide an online platform for renting camera-based equipment.',
       imageUrl: cameraImage,
-      technologies: ['REACT J.S', 'TAILWIND CSS', 'NODE J.S', 'MONGO DB']
+      technologies: ['REACT J.S', 'TAILWIND CSS', 'NODE J.S', 'MONGO DB'],
+      appLink: ''
     },
     {
       title: 'Ecommerce Mobile App',
       description: 'built ecommerce app using React Native.',
       imageUrl: ecommerceImage,
       technologies: ['REACT NATIVE'],
-      isMobile: true
+      isMobile: true,
+      appLink: ''
     },
     {
       title: 'FOOD APP',
       description: 'Built food app UI with React Native.',
       imageUrl: foodImage,
       technologies: ['REACT NATIVE'],
-      isMobile: true
+      isMobile: true,
+      appLink: ''
     },
     {
       title: 'To Do List',
       description: 'built todo list with user details using react native',
       imageUrl: todoImage,
       technologies: ['REACT NATIVE'],
-      isMobile: true
+      isMobile: true,
+      appLink: ''
     },
   ], []);
 
