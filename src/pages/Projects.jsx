@@ -9,7 +9,7 @@ import ecommerceImage from '../assets/images/ecommerce.png';
 import foodImage from '../assets/images/food.png';
 import todoImage from '../assets/images/todo.png';
 import squegg from '../assets/images/squegg.png';
-import msat from '../assets/images/msat.png';
+import msat from '../assets/images/MSAT.png';
 
 const ProjectCard = React.memo(({ project, index, isMobile }) => {
   const [isHovered, setIsHovered] = useState(false);
