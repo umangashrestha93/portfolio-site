@@ -19,27 +19,27 @@ const ProjectCard = React.memo(({ project, index, isMobile }) => {
     if (project.appLink == '') return;
     return (
       <Button
-          variant="contained"
-          size={isMobile ? 'medium' : 'large'}
-          sx={{
-            background: 'linear-gradient(to right,rgb(83, 51, 101),rgb(53, 11, 104))',
-            color: 'white',
-            px: 4,
-            py: 1.5,
-            borderRadius: '8px',
-            fontWeight: 600,
-            fontFamily: 'Space Grotesk',
-            '&:hover': {
-              backgroundColor: '#213555',
-              transform: 'translateY(-2px)',
-              boxShadow: '0 4px 8px rgba(2, 29, 48, 0.3)',
-            },
-            transition: 'all 0.3s ease',
-          }}
-          onClick={() => window.open(project.appLink, '_blank')}
-        >
-          App Link
-        </Button>
+        variant="contained"
+        size={isMobile ? 'medium' : 'large'}
+        sx={{
+          background: 'linear-gradient(to right,rgb(83, 51, 101),rgb(53, 11, 104))',
+          color: 'white',
+          px: 4,
+          py: 1.5,
+          borderRadius: '8px',
+          fontWeight: 600,
+          fontFamily: 'Space Grotesk',
+          '&:hover': {
+            backgroundColor: '#213555',
+            transform: 'translateY(-2px)',
+            boxShadow: '0 4px 8px rgba(2, 29, 48, 0.3)',
+          },
+          transition: 'all 0.3s ease',
+        }}
+        onClick={() => window.open(project.appLink, '_blank')}
+      >
+        App Link
+      </Button>
     )
   }
 
@@ -185,7 +185,7 @@ const ProjectCard = React.memo(({ project, index, isMobile }) => {
             ))}
           </Box>
           <Box sx={{ marginTop: 5 }}>
-            { renderButton() }
+            {renderButton()}
           </Box>
         </CardContent>
       </Card>
@@ -208,7 +208,7 @@ const Projects = () => {
   const SqueggAppLink = isAndroid() ? 'https://play.google.com/store/apps/details?id=com.nudiao.squegg&hl=en' : 'https://apps.apple.com/us/app/squegg/id1438724856';
 
   const MsatAppLink = isAndroid() ? "https://play.google.com/store/apps/details?id=com.abbothcp&hl=en" : "https://apps.apple.com/us/app/msat-muscle-strength-tool/id6444227788"
-  
+
 
   const projects = React.useMemo(() => [
     {
