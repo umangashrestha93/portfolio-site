@@ -14,7 +14,7 @@ import msat from '../assets/images/msat.png';
 const ProjectCard = React.memo(({ project, index, isMobile }) => {
   const [isHovered, setIsHovered] = useState(false);
   const theme = useTheme();
-  console.log("project", project.appLink)
+
   const renderButton = () => {
     if (project.appLink == '') return;
     return (
