@@ -16,9 +16,17 @@ const About = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
   const skills = [
-    'HTML', 'CSS', 'JavaScript', 'React.js', 'React Native',
-    'Next.js', 'Java', 'Git & GitHub'
-  ];
+  'HTML',
+  'CSS',
+  'JavaScript',
+  'React.js',
+  'Next.js',
+  'React Native',
+  'REST API',
+  'Java',
+  'Git & GitHub',
+  'Jira'
+];
 
   const handleDownload = () => {
     const link = document.createElement('a');
@@ -103,14 +111,12 @@ const About = () => {
                 fontFamily: 'Space Grotesk',
               }}
             >
-              I am <strong>Umanga Kumar Shrestha</strong>, a passionate Front-End Developer with hands-on experience
-              in building modern web and mobile applications using <strong>React.js</strong>, <strong>React Native</strong>,
-              and <strong>Next.js</strong>. With a degree in Computer Science from Herald College Kathmandu,
-              I have worked on real-world projects like delivery apps, admin dashboards, and e-commerce platforms.
-              I focus on delivering responsive, intuitive UIs while continuously learning and adapting to new technologies.
+              I am <strong>Umanga Kumar Shrestha</strong>, a Software Developer specializing in modern web and mobile application development. I build high-performance, scalable applications using <strong>React.js</strong>, <strong>React Native</strong>, and <strong>Next.js</strong>.
+              With a Computer Science degree from Herald College Kathmandu and professional industry experience, I have developed production-ready applications such as delivery platforms, admin dashboards, and e-commerce systems. I focus on creating responsive, intuitive user interfaces while writing clean, maintainable code that ensures reliability and performance.
+              I am passionate about solving real-world problems through technology and continuously expanding my skills to build better digital products.
             </Typography>
 
-            <Box sx={{ marginTop: 5}}>
+            <Box sx={{ marginTop: 5 }}>
               <Button
                 variant="contained"
                 size={isMobile ? 'medium' : 'large'}
@@ -156,6 +162,11 @@ const About = () => {
                       px: 1.5,
                       py: 1,
                       fontFamily: 'Space Grotesk',
+                      transition: '0.2s',
+                      '&:hover': {
+                        transform: 'translateY(-2px)',
+                        boxShadow: 2
+                      }
                     }}
                   />
                 </Grid>

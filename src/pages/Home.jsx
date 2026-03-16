@@ -50,7 +50,7 @@ const Home = () => {
             }}
             fontFamily="Space Grotesk"
           >
-            A Front-End Developer with experience in building web and mobile applications
+            A Software Developer with experience in building web and mobile applications
             using React.js, React Native, and Next.js.
           </Typography>
         </Box>
