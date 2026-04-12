@@ -1,18 +1,8 @@
-import React, { useState } from 'react';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import Button from '@mui/material/Button';
-import IconButton from '@mui/material/IconButton';
+import React, { useState, useEffect } from 'react';
+import { Box, IconButton, Drawer, Typography, useMediaQuery, useTheme } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
-import { useTheme } from '@mui/material/styles';
-import useMediaQuery from '@mui/material/useMediaQuery';
-import Drawer from '@mui/material/Drawer';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemText from '@mui/material/ListItemText';
-import Divider from '@mui/material/Divider';
+import CloseIcon from '@mui/icons-material/Close';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Link as ScrollLink } from 'react-scroll';
 import profileImage from '../assets/images/umangaaa.jpg';
 
@@ -27,211 +17,228 @@ const Header = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 50);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
 
-  const handleNavClick = (id) => {
-    if (id === 'home-section') {
-      window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-      });
-    }
-    setMobileOpen(false);
+  const navLinksVariants = {
+    hidden: { opacity: 0, y: -20 },
+    visible: (i) => ({
+      opacity: 1,
+      y: 0,
+      transition: { delay: i * 0.1, duration: 0.8, ease: [0.16, 1, 0.3, 1] }
+    })
   };
 
-  const drawer = (
-    <Box 
-      sx={{ 
-        width: { xs: '100%', sm: 280 },
-        height: '100vh',
-        background: '#F7F7F7',
-        display: 'flex',
-        flexDirection: 'column'
-      }}
-    >
-      <Box sx={{ padding: 5}}></Box>
-      <List sx={{ flexGrow: 1 }}>
-        {navItems.map((item) => (
-          <ListItem key={item.id} disablePadding>
-            {item.id === 'home-section' ? (
-              <ListItemButton 
-                onClick={() => handleNavClick(item.id)}
+  const renderDesktopNav = () => (
+    <Box sx={{ display: 'flex', gap: 6, alignItems: 'center' }}>
+      {navItems.map((item, i) => (
+        <motion.div
+          key={item.id}
+          custom={i}
+          initial="hidden"
+          animate="visible"
+          variants={navLinksVariants}
+        >
+          {item.id === 'home-section' ? (
+            <Typography
+              onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+              sx={{
+                color: theme.palette.text.secondary,
+                fontWeight: 500,
+                cursor: 'pointer',
+                fontFamily: 'Space Grotesk',
+                fontSize: '0.9rem',
+                textTransform: 'uppercase',
+                letterSpacing: 2,
+                transition: 'color 0.3s ease',
+                '&:hover': {
+                  color: theme.palette.text.primary,
+                }
+              }}
+            >
+              {item.name}
+            </Typography>
+          ) : (
+            <ScrollLink
+              to={item.id}
+              spy={true}
+              smooth={true}
+              duration={800}
+              offset={0}
+            >
+              <Typography
                 sx={{
-                  py: 2,
+                  color: theme.palette.text.secondary,
+                  fontWeight: 500,
+                  cursor: 'pointer',
+                  fontFamily: 'Space Grotesk',
+                  fontSize: '0.9rem',
+                  textTransform: 'uppercase',
+                  letterSpacing: 2,
+                  transition: 'color 0.3s ease',
                   '&:hover': {
-                    background: 'rgba(155, 148, 148, 0.1)',
+                    color: theme.palette.text.primary,
                   }
                 }}
               >
-                <ListItemText 
-                  primary={item.name}
-                  primaryTypographyProps={{ 
-                    fontWeight: 'medium',
-                    textAlign: 'center',
-                    color: '#000000'
-                  }} 
-                />
-              </ListItemButton>
-            ) : (
-              <ScrollLink
-                to={item.id}
-                spy={true}
-                smooth={true}
-                duration={500}
-                offset={-70}
-                onClick={() => handleNavClick(item.id)}
-                style={{ width: '100%' }}
-              >
-                <ListItemButton 
-                  sx={{
-                    py: 2,
-                    '&:hover': {
-                      background: 'rgba(155, 148, 148, 0.1)',
-                    }
-                  }}
-                >
-                  <ListItemText 
-                    primary={item.name}
-                    primaryTypographyProps={{ 
-                      fontWeight: 'medium',
-                      textAlign: 'center',
-                      color: '#000000'
-                    }} 
-                  />
-                </ListItemButton>
-              </ScrollLink>
-            )}
-            <Divider sx={{ borderColor: 'rgba(255, 255, 255, 0.1)' }} />
-          </ListItem>
-        ))}
-      </List>
+                {item.name}
+              </Typography>
+            </ScrollLink>
+          )}
+        </motion.div>
+      ))}
     </Box>
   );
 
   return (
-    <Box sx={{ display: 'flex' }}>
-      <AppBar 
-        position="fixed" 
-        sx={{ 
-          background: '#F7F7F7',
-          zIndex: (theme) => theme.zIndex.drawer + 1,
-          py: 0.8
+    <>
+      <motion.div
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+        style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          zIndex: 1100,
+          display: 'flex',
+          justifyContent: 'center',
+          padding: '24px 0',
+          transition: 'all 0.5s cubic-bezier(0.16, 1, 0.3, 1)',
+          background: scrolled ? 'rgba(5, 5, 5, 0.8)' : 'transparent',
+          backdropFilter: scrolled ? 'blur(20px)' : 'none',
+          borderBottom: scrolled ? '1px solid rgba(255,255,255,0.05)' : '1px solid transparent',
         }}
       >
-        <Toolbar>
-          {isMobile && (
-            <IconButton
-              size="large"
-              edge="start"
-              color="inherit"
-              aria-label="menu"
-              sx={{ mr: 2, color: '#000000' }}
-              onClick={handleDrawerToggle}
-            >
-              <MenuIcon />
-            </IconButton>
-          )}
-
-          <Box
-            onClick={() => handleNavClick('home-section')}
-            sx={{
-              display: 'flex',
-              alignItems: 'center',
-              flexGrow: isMobile ? 0 : 1,
-              justifyContent: 'flex-start',
-              cursor: 'pointer'
-            }}
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            width: '100%',
+            maxWidth: 1200,
+            px: { xs: 3, md: 5 },
+          }}
+        >
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1 }}
+            style={{ cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '12px' }}
+            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
           >
             <Box
               component="img"
               src={profileImage}
-              alt="Profile"
+              alt="Umanga Shrestha"
               sx={{
-                height: { xs: 40, sm: 50, md: 60 },
-                width: { xs: 40, sm: 50, md: 60 },
+                width: 36,
+                height: 36,
                 borderRadius: '50%',
                 objectFit: 'cover',
-                border: '2px solid #e0e0e0',
-                boxShadow: 1,
-                mr: isMobile ? 2 : 0
+                border: '1px solid rgba(255,255,255,0.2)',
+                filter: 'grayscale(100%)',
+                transition: 'all 0.3s ease',
+                '&:hover': {
+                  filter: 'grayscale(0%)',
+                  borderColor: theme.palette.primary.main,
+                  boxShadow: `0 0 15px ${theme.palette.primary.main}`,
+                }
               }}
             />
-          </Box>
-          {!isMobile && (
-            <Box sx={{ display: 'flex' }}>
-              {navItems.map((item) => (
-                item.id === 'home-section' ? (
-                  <Button 
-                    key={item.id}
-                    onClick={() => handleNavClick(item.id)}
-                    sx={{
-                      mx: 1,
-                      color: '#000000',
-                      fontWeight: 'bold',
-                      fontSize: '20px',
-                      '&:hover': {
-                        backgroundColor: 'rgba(155, 148, 148, 0.1)',
+          </motion.div>
+
+          {!isMobile ? (
+            renderDesktopNav()
+          ) : (
+            <IconButton
+              color="inherit"
+              aria-label="open drawer"
+              edge="start"
+              onClick={handleDrawerToggle}
+              sx={{ color: theme.palette.text.primary }}
+            >
+              <MenuIcon />
+            </IconButton>
+          )}
+        </Box>
+      </motion.div>
+
+      <AnimatePresence>
+        {mobileOpen && (
+          <Drawer
+            variant="temporary"
+            open={mobileOpen}
+            onClose={handleDrawerToggle}
+            ModalProps={{ keepMounted: true }}
+            PaperProps={{
+              sx: {
+                width: '100%',
+                background: '#050505',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }
+            }}
+          >
+            <IconButton
+              onClick={handleDrawerToggle}
+              sx={{ position: 'absolute', top: 24, right: 24, color: theme.palette.text.primary }}
+            >
+              <CloseIcon />
+            </IconButton>
+            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 6, alignItems: 'center' }}>
+              {navItems.map((item, i) => (
+                <motion.div
+                  key={item.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -20 }}
+                  transition={{ delay: i * 0.1, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                >
+                  <Typography
+                    onClick={() => {
+                      if (item.id === 'home-section') {
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                      } else {
+                        document.getElementById(item.id)?.scrollIntoView({ behavior: 'smooth' });
                       }
+                      handleDrawerToggle();
+                    }}
+                    sx={{
+                      color: theme.palette.text.primary,
+                      fontSize: '2.5rem',
+                      fontWeight: 600,
+                      fontFamily: 'Space Grotesk',
+                      textTransform: 'lowercase',
+                      cursor: 'pointer',
+                      transition: 'color 0.3s ease',
+                      '&:hover': { color: theme.palette.primary.main }
                     }}
                   >
                     {item.name}
-                  </Button>
-                ) : (
-                  <ScrollLink
-                    key={item.id}
-                    to={item.id}
-                    spy={true}
-                    smooth={true}
-                    duration={500}
-                    offset={-70}
-                  >
-                    <Button 
-                      sx={{
-                        mx: 1,
-                        color: '#000000',
-                        fontWeight: 'bold',
-                        fontSize: '20px',
-                        '&:hover': {
-                          backgroundColor: 'rgba(155, 148, 148, 0.1)',
-                        }
-                      }}
-                    >
-                      {item.name}
-                    </Button>
-                  </ScrollLink>
-                )
+                  </Typography>
+                </motion.div>
               ))}
             </Box>
-          )}
-        </Toolbar>
-      </AppBar>
-      <Box component="nav">
-        <Drawer
-          variant="temporary"
-          open={mobileOpen}
-          onClose={handleDrawerToggle}
-          ModalProps={{
-            keepMounted: true,
-          }}
-          sx={{
-            '& .MuiDrawer-paper': { 
-              boxSizing: 'border-box',
-              width: { xs: '100%', sm: 280 },
-              borderRight: 'none',
-              background: 'transparent',
-              overflow: 'hidden'
-            },
-          }}
-        >
-          {drawer}
-        </Drawer>
-      </Box>
-      <Toolbar />
-    </Box>
+          </Drawer>
+        )}
+      </AnimatePresence>
+    </>
   );
 };
 
-export default Header;
+export default React.memo(Header);

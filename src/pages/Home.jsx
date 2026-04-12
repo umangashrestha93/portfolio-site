@@ -2,6 +2,7 @@ import React, { lazy, Suspense } from 'react';
 import Header from '../components/Header';
 import { Box, Button, Typography, useTheme, useMediaQuery } from '@mui/material';
 import Footer from '../components/Footer';
+import { motion } from 'framer-motion';
 
 const About = lazy(() => import('./About'));
 const Projects = lazy(() => import('./Projects'));
@@ -11,103 +12,142 @@ const Home = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: { staggerChildren: 0.15, delayChildren: 0.4 }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 40 },
+    visible: { opacity: 1, y: 0, transition: { duration: 1, ease: [0.16, 1, 0.3, 1] } }
+  };
+
   const renderContents = () => {
     return (
       <Box sx={{ 
         display: 'flex', 
         flexDirection: 'column', 
-        alignItems: { xs: 'center', md: 'flex-start' }, 
+        alignItems: { xs: 'flex-start', md: 'flex-start' }, 
         justifyContent: 'center', 
-        minHeight: `calc(100vh - 80px)`, 
-        px: { xs: 3, sm: 5, md: 10 }, 
-        py: { xs: 4, md: 0 }, 
-        maxWidth: '1000px', 
-        marginLeft: {md: 10, xs: 0}, 
-        marginTop: { xs: 10, md: 0}, 
+        minHeight: `100vh`, 
+        px: { xs: 4, sm: 8, md: 15 }, 
+        maxWidth: '1400px', 
+        position: 'relative',
+        zIndex: 10
       }}>
-        <Box sx={{ mb: 4 }}>
-          <Typography 
-            variant={isMobile ? 'h3' : 'h2'} 
-            component="h1" 
-            sx={{ 
-              fontWeight: 700, 
-              color: '#f5f5f5', 
-              lineHeight: 1.2, 
-              mb: 2, 
-            }}
-            fontFamily="Space Grotesk"
-          >
-            Hello! I'm Umanga Shrestha
-          </Typography>
+        <motion.div variants={containerVariants} initial="hidden" animate="visible" style={{ width: '100%' }}>
+          
+          <motion.div variants={itemVariants}>
+            <Typography
+              sx={{
+                color: theme.palette.text.secondary,
+                fontWeight: 500,
+                letterSpacing: 3,
+                textTransform: 'uppercase',
+                fontSize: { xs: '0.8rem', md: '0.9rem' },
+                mb: 3,
+                fontFamily: 'Space Grotesk'
+              }}
+            >
+              Software Developer
+            </Typography>
+          </motion.div>
 
-          <Typography
-            variant={isMobile ? 'body1' : 'h6'}
-            component="p"
-            sx={{
-              maxWidth: '600px',
-              color: '#e0e0e0',
-              lineHeight: 1.6,
-            }}
-            fontFamily="Space Grotesk"
-          >
-            A Software Developer with experience in building web and mobile applications
-            using React.js, React Native, and Next.js.
-          </Typography>
-        </Box>
+          <motion.div variants={itemVariants}>
+            <Typography 
+              variant={isMobile ? 'h2' : 'h1'} 
+              component="h1" 
+              sx={{ 
+                fontWeight: 700, 
+                color: theme.palette.text.primary, 
+                lineHeight: 1.05, 
+                letterSpacing: -2,
+                mb: 4, 
+                fontFamily: 'Space Grotesk',
+              }}
+            >
+              Building digital <br />
+              experiences that <br />
+              <Box component="span" sx={{ 
+                background: `linear-gradient(135deg, ${theme.palette.primary.main} 0%, ${theme.palette.secondary.main} 100%)`, 
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+              }}>
+                resonate.
+              </Box>
+            </Typography>
+          </motion.div>
 
-        <Button
-          variant="contained"
-          size={isMobile ? 'medium' : 'large'}
-          sx={{
-            background: 'linear-gradient(to right,rgb(83, 51, 101),rgb(53, 11, 104))',
-            color: 'white',
-            px: 4,
-            py: 1.5,
-            borderRadius: '8px',
-            fontWeight: 600,
-            fontFamily: 'Space Grotesk',
-            '&:hover': {
-              backgroundColor: '#213555',
-              transform: 'translateY(-2px)',
-              boxShadow: '0 4px 8px rgba(2, 29, 48, 0.3)',
-            },
-            transition: 'all 0.3s ease',
-          }}
-          onClick={() => {
-            const element = document.getElementById('projects-section');
-            if (element) {
-              element.scrollIntoView({ behavior: 'smooth' });
-            }
-          }}
-        >
-          View My Projects
-        </Button>
+          <motion.div variants={itemVariants}>
+            <Typography
+              component="p"
+              sx={{
+                maxWidth: '500px',
+                color: theme.palette.text.secondary,
+                lineHeight: 1.7,
+                fontSize: { xs: '1rem', md: '1.1rem' },
+                mb: 6,
+                fontFamily: 'Space Grotesk'
+              }}
+            >
+              Hi, I'm Umanga Shrestha. I engineer scalable web and mobile applications with obsessive attention to detail, using React, React Native, and Next.js.
+            </Typography>
+          </motion.div>
+
+          <motion.div variants={itemVariants}>
+            <Button
+              sx={{
+                color: theme.palette.text.primary,
+                px: 5,
+                py: 2,
+                borderRadius: '50px',
+                fontWeight: 600,
+                fontSize: '0.95rem',
+                fontFamily: 'Space Grotesk',
+                textTransform: 'uppercase',
+                letterSpacing: 1.5,
+                border: '1px solid rgba(255,255,255,0.2)',
+                background: 'rgba(255,255,255,0.05)',
+                backdropFilter: 'blur(10px)',
+                transition: 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
+                '&:hover': {
+                  background: '#ffffff',
+                  color: '#000000',
+                  transform: 'translateY(-2px)',
+                },
+              }}
+              onClick={() => {
+                const element = document.getElementById('projects-section');
+                if (element) {
+                  element.scrollIntoView({ behavior: 'smooth' });
+                }
+              }}
+            >
+              Explore Work
+            </Button>
+          </motion.div>
+        </motion.div>
       </Box>
     );
   };
 
   return (
-    <Box id= 'home-section' sx={{ 
+    <Box id='home-section' sx={{ 
       minHeight: '100vh',
-      background: 'linear-gradient(to right,rgb(83, 51, 101),rgb(53, 11, 104))',
-      backgroundSize: 'cover',
-      backgroundPosition: 'center',
-      backgroundRepeat: 'no-repeat',
-      backgroundAttachment: 'fixed',
-      overflowX: 'hidden',
+      background: 'transparent', // The 3D Canvas sits behind this
     }}>
       <Header />
       {renderContents()}
       
-      <Suspense fallback={<div>Loading...</div>}>
-        <Box sx={{ marginTop: 4}} id="about">
+      <Suspense fallback={<Box sx={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff' }}>Loading...</Box>}>
+        <Box sx={{ position: 'relative', zIndex: 10 }}>
           <About />
-        </Box>
-        <Box id="projects-section">
           <Projects />
-
+          <Contact />
         </Box>
-        <Contact />
       </Suspense>
       
       <Footer />

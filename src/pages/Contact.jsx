@@ -1,14 +1,7 @@
 import React, { useState } from 'react';
-import {
-  Box,
-  Typography,
-  TextField,
-  Button,
-  useTheme,
-  useMediaQuery,
-  CircularProgress
-} from '@mui/material';
+import { Box, Typography, TextField, Button, useTheme, useMediaQuery, CircularProgress, Container } from '@mui/material';
 import { toast, ToastContainer } from 'react-toastify';
+import { motion } from 'framer-motion';
 
 const Contact = () => {
   const theme = useTheme();
@@ -29,202 +22,125 @@ const Contact = () => {
     try {
       const res = await fetch("https://api.web3forms.com/submit", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json"
-        },
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
         body: json
       });
 
       const data = await res.json();
 
       if (data.success) {
-        toast.success("Form Submitted Sucessfully!")
+        toast.success("Message sent successfully.")
         form.reset();
       } else {
-        console.error("Submission error:", data);
-        toast.error("There was an error submitting the form. Please try again.")
+        toast.error("Error sending message. Please try again.")
       }
     } catch (error) {
-      console.error("Network error:", error);
-      toast.error("Network error. Please check your connection and try again.")
+      toast.error("Network error. Please try again.")
     } finally {
       setIsSubmitting(false)
     }
   };
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: { opacity: 1, transition: { staggerChildren: 0.15 } }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } }
+  };
+
+  const textFieldStyle = {
+    '& .MuiOutlinedInput-root': {
+      backgroundColor: 'rgba(255,255,255,0.03)',
+      borderRadius: '8px',
+      color: theme.palette.text.primary,
+      fontFamily: 'Space Grotesk',
+      transition: 'all 0.3s ease',
+      '& fieldset': {
+        borderColor: 'rgba(255,255,255,0.1)',
+        transition: 'border-color 0.3s ease',
+      },
+      '&:hover fieldset': {
+        borderColor: 'rgba(255,255,255,0.3)',
+      },
+      '&.Mui-focused fieldset': {
+        borderWidth: '1px',
+        borderColor: theme.palette.primary.main,
+      },
+    },
+    '& .MuiInputLabel-root': {
+      color: theme.palette.text.secondary,
+      fontFamily: 'Space Grotesk',
+      '&.Mui-focused': {
+        color: theme.palette.primary.main,
+      }
+    }
+  };
+
   return (
-    <Box
-      id='contact-section'
-      component="section"
-      sx={{
-        width: '100%',
-        py: 10,
-        position: 'relative',
-        overflow: 'hidden',
-        '&::before': {
-          content: '""',
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          background: 'linear-gradient(to right, #16404D, #2A5E6A)',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat',
-          zIndex: 0,
-          opacity: 0.7,
-        }
-      }}
-    >
-      <Box sx={{
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        backgroundColor: 'rgba(0, 0, 0, 0.4)',
-        zIndex: 1
-      }} />
+    <Box id="contact-section" component="section" sx={{ width: '100%', py: { xs: 8, md: 15 }, position: 'relative', zIndex: 2 }}>
+      <Container maxWidth="xl" component={motion.div} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} variants={containerVariants}>
+        
+        <motion.div variants={itemVariants}>
+          <Box sx={{ mb: { xs: 6, md: 10 }, display: 'flex', alignItems: 'center', gap: 3 }}>
+            <Typography variant="h3" sx={{ fontWeight: 700, color: theme.palette.text.primary, fontFamily: 'Space Grotesk', fontSize: { xs: '2rem', md: '3rem' }, letterSpacing: -1 }}>
+              Contact
+            </Typography>
+            <Box sx={{ height: '1px', flexGrow: 1, background: 'rgba(255,255,255,0.1)' }} />
+          </Box>
+        </motion.div>
 
-      <Box sx={{
-        maxWidth: 1200,
-        mx: 'auto',
-        px: isMobile ? 3 : 4,
-        width: '100%',
-        position: 'relative',
-        zIndex: 2
-      }}>
-        <Box sx={{ textAlign: 'center', mb: 6 }}>
-          <Typography
-            variant={isMobile ? 'h3' : 'h2'}
-            component="h2"
-            gutterBottom
-            sx={{
-              fontWeight: 'bold',
-              fontSize: isMobile ? '2.5rem' : '3rem',
-              color: 'common.white'
-            }}
-          >
-            Contact
-          </Typography>
-          <Typography
-            variant={isMobile ? 'h6' : 'h5'}
-            sx={{
-              maxWidth: 700,
-              mx: 'auto',
-              lineHeight: 1.6,
-              color: 'rgba(255, 255, 255, 0.9)'
-            }}
-          >
-            Feel free to Contact me by submitting the form below and I will get back to you as soon as possible
-          </Typography>
-        </Box>
+        <Box sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' }, gap: { xs: 6, md: 12 } }}>
+          
+          <Box flex={1} component={motion.div} variants={itemVariants}>
+            <Typography variant="h4" sx={{ fontWeight: 500, mb: 3, color: theme.palette.text.primary, fontFamily: 'Space Grotesk', letterSpacing: -1 }}>
+              Let's create something <br/> <Box component="span" sx={{ color: theme.palette.secondary.main }}>extraordinary.</Box>
+            </Typography>
+            <Typography variant="body1" sx={{ color: theme.palette.text.secondary, lineHeight: 1.8, fontSize: '1.05rem', fontFamily: 'Space Grotesk', mb: 4, maxWidth: '500px' }}>
+              Have an idea or a project in mind? Reach out and let's discuss how we can bring it to life with precision and style.
+            </Typography>
+          </Box>
 
-        <Box
-          component="form"
-          onSubmit={onSubmit}
-          sx={{
-            p: isMobile ? 4 : 6,
-            borderRadius: 3,
-            boxShadow: 3,
-            backgroundColor: 'background.paper',
-            maxWidth: 800,
-            mx: 'auto',
-            width: '100%'
-          }}
-        >
-          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
-            <TextField
-              required
-              fullWidth
-              name="name"
-              label="Name"
-              variant="outlined"
-              margin="normal"
-              InputProps={{
-                style: {
-                  fontSize: isMobile ? '1.1rem' : '1.2rem',
-                  padding: isMobile ? '12px 14px' : '16px 18px'
-                }
-              }}
-              InputLabelProps={{
-                style: {
-                  fontSize: isMobile ? '1.1rem' : '1.2rem'
-                }
-              }}
-            />
-            <TextField
-              required
-              fullWidth
-              name="email"
-              label="Email"
-              type="email"
-              variant="outlined"
-              margin="normal"
-              InputProps={{
-                style: {
-                  fontSize: isMobile ? '1.1rem' : '1.2rem',
-                  padding: isMobile ? '12px 14px' : '16px 18px'
-                }
-              }}
-              InputLabelProps={{
-                style: {
-                  fontSize: isMobile ? '1.1rem' : '1.2rem'
-                }
-              }}
-            />
-            <TextField
-              required
-              fullWidth
-              name="message"
-              label="Message"
-              multiline
-              rows={isMobile ? 5 : 7}
-              variant="outlined"
-              margin="normal"
-              InputProps={{
-                style: {
-                  fontSize: isMobile ? '1.1rem' : '1.2rem',
-                  padding: isMobile ? '12px 14px' : '16px 18px'
-                }
-              }}
-              InputLabelProps={{
-                style: {
-                  fontSize: isMobile ? '1.1rem' : '1.2rem'
-                }
-              }}
-            />
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              size="large"
-              disabled={isSubmitting}
-              sx={{
-                py: 2,
-                mt: 3,
-                fontSize: isMobile ? '1.1rem' : '1.3rem',
-                fontWeight: 'bold',
-                letterSpacing: 1.1,
-                background: 'linear-gradient(to right, #16404D, #2A5E6A)',
-                '&:disabled': {
-                  background: '#cccccc'
-                }
-              }}
-            >
-              {isSubmitting ? (
-                <CircularProgress size={24} color="inherit" />
-              ) : (
-                'Submit'
-              )}
-            </Button>
+          <Box flex={1.2} component={motion.div} variants={itemVariants}>
+            <Box component="form" onSubmit={onSubmit} sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
+              <TextField required fullWidth name="name" label="Name" variant="outlined" sx={textFieldStyle} />
+              <TextField required fullWidth name="email" label="Email Address" type="email" variant="outlined" sx={textFieldStyle} />
+              <TextField required fullWidth name="message" label="Message" multiline rows={6} variant="outlined" sx={textFieldStyle} />
 
+              <Box sx={{ mt: 2 }}>
+                <Button
+                  type="submit"
+                  disabled={isSubmitting}
+                  sx={{
+                    py: 2, px: 6,
+                    fontSize: '1rem',
+                    fontWeight: 600,
+                    fontFamily: 'Space Grotesk',
+                    textTransform: 'uppercase',
+                    letterSpacing: 1.5,
+                    color: '#fff',
+                    background: `linear-gradient(135deg, ${theme.palette.primary.main} 0%, ${theme.palette.secondary.main} 100%)`,
+                    borderRadius: '4px',
+                    boxShadow: 'none',
+                    transition: 'all 0.4s ease',
+                    opacity: isSubmitting ? 0.7 : 1,
+                    '&:hover': {
+                      boxShadow: `0 10px 30px -10px ${theme.palette.primary.main}`,
+                      transform: 'translateY(-2px)'
+                    },
+                  }}
+                >
+                  {isSubmitting ? <CircularProgress size={24} sx={{ color: '#fff' }} /> : 'Send Message'}
+                </Button>
+              </Box>
+            </Box>
           </Box>
         </Box>
-      </Box>
-      <ToastContainer />
+
+      </Container>
+      <ToastContainer position="bottom-right" toastStyle={{ backgroundColor: '#111', color: '#fff', fontFamily: 'Space Grotesk', border: '1px solid rgba(255,255,255,0.1)' }} />
     </Box>
   );
 };
