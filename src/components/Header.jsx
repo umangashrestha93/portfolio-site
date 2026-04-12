@@ -147,6 +147,7 @@ const Header = () => {
                 height: 36,
                 borderRadius: '50%',
                 objectFit: 'cover',
+                objectPosition: 'left',
                 border: '1px solid rgba(255,255,255,0.2)',
                 filter: 'grayscale(100%)',
                 transition: 'all 0.3s ease',
