@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { Float, Sphere, MeshDistortMaterial, Environment } from '@react-three/drei';
+import { Float, Sphere, MeshDistortMaterial, Loader } from '@react-three/drei';
 
 const MorphingCore = () => {
   const meshRef = useRef();
@@ -53,6 +53,13 @@ const Background3D = () => {
         <MorphingCore />
         <CameraRig />
       </Canvas>
+      <Loader 
+        containerStyles={{ background: '#050505' }} // matching background
+        innerStyles={{ width: '400px', background: 'rgba(255,255,255,0.1)', height: '2px' }}
+        barStyles={{ background: 'linear-gradient(135deg, #6366f1 0%, #ec4899 100%)', height: '2px' }}
+        dataStyles={{ display: 'none' }}
+        dataInterpolation={(p) => `Loading ${p.toFixed(0)}%`}
+      />
     </div>
   );
 };

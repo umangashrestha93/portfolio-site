@@ -100,7 +100,10 @@ const ProjectCard = React.memo(({ project, index, isMobile }) => {
             overflow: 'hidden', 
             height: { xs: 180, md: 220 }, 
             flexShrink: 0,
-            background: '#0a0a0a',
+            background: '#050505',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center'
           }}>
             <CardMedia
               component="img"
@@ -112,11 +115,13 @@ const ProjectCard = React.memo(({ project, index, isMobile }) => {
                 width: '100%',
                 height: '100%',
                 objectFit: project.isMobile ? 'contain' : 'cover',
-                objectPosition: 'top center',
+                objectPosition: 'center',
                 transition: 'transform 0.7s cubic-bezier(0.16, 1, 0.3, 1), filter 0.7s',
                 transform: isHovered && !isMobile ? 'scale(1.05)' : 'scale(1)',
                 filter: isHovered ? 'brightness(0.8)' : 'brightness(1)',
                 willChange: 'transform',
+                margin: 'auto',
+                display: 'block'
               }}
             />
           </Box>

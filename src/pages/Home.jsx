@@ -1,6 +1,7 @@
 import React, { lazy, Suspense } from 'react';
 import Header from '../components/Header';
 import { Box, Button, Typography, useTheme, useMediaQuery } from '@mui/material';
+import Loader from '../components/Loader';
 import Footer from '../components/Footer';
 import { motion } from 'framer-motion';
 
@@ -142,7 +143,7 @@ const Home = () => {
       <Header />
       {renderContents()}
       
-      <Suspense fallback={<Box sx={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff' }}>Loading...</Box>}>
+      <Suspense fallback={<Loader />}>
         <Box sx={{ position: 'relative', zIndex: 10 }}>
           <About />
           <Projects />

@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { CssBaseline, ThemeProvider, createTheme } from '@mui/material';
+import { motion, AnimatePresence } from 'framer-motion';
 import Home from './pages/Home';
 import Background3D from './components/Background3D';
+import Loader from './components/Loader';
 
 const theme = createTheme({
   typography: {
@@ -60,10 +62,39 @@ const theme = createTheme({
 });
 
 const MainLayout = () => {
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    // Show the intro loader for 2.2 seconds exactly when the app loads
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 2200);
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Background3D />
+      <AnimatePresence>
+        {loading && (
+          <motion.div
+            key="initial-loader"
+            exit={{ opacity: 0, y: -50 }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            style={{
+              position: 'fixed',
+              zIndex: 99999, // Super high z-index to cover EVERYTHING
+              top: 0, left: 0, right: 0, bottom: 0,
+              background: '#050505'
+            }}
+          >
+            <Loader />
+          </motion.div>
+        )}
+      </AnimatePresence>
+      
+      {!loading && <Background3D />}
+      
       <Router>
         <Routes>
           <Route path="/" element={<Home />} />
