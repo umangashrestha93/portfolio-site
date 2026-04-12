@@ -128,7 +128,6 @@ const Header = () => {
             alignItems: 'center',
             justifyContent: 'space-between',
             width: '100%',
-            maxWidth: 1200,
             px: { xs: 3, md: 5 },
           }}
         >
