@@ -10,6 +10,7 @@ import foodImage from '../assets/images/food.png';
 import todoImage from '../assets/images/todo.png';
 import squegg from '../assets/images/squegg.png';
 import msat from '../assets/images/MSAT.png';
+import beyond5 from '../assets/images/beyond5.png';
 
 const ProjectCard = React.memo(({ project, index, isMobile }) => {
   const [isHovered, setIsHovered] = useState(false);
@@ -222,6 +223,13 @@ const Projects = () => {
       imageUrl: msat,
       technologies: ['React Native', 'JavaScript'],
       appLink: MsatAppLink
+    },
+    {
+      title: 'BEYOND5 HealthCare',
+      description: 'A new national Allied Health access model, designed to shift access beyond 9–5 into the hours people actually live their lives.',
+      imageUrl: beyond5,
+      technologies: ['React.JS', 'MUI', 'JavaScript', 'MONGODB', 'EXPRESS.JS', 'FRAMER MOTION', 'THREE.JS' ],
+      appLink: ''
     },
     {
       title: 'Portfolio Site',
