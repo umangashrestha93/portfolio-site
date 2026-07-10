@@ -2,7 +2,7 @@ import React from 'react';
 import { Box, Typography, useTheme, useMediaQuery, Chip, Grid, Container } from '@mui/material';
 import { motion } from 'framer-motion';
 import ArrowOutwardIcon from '@mui/icons-material/ArrowOutward';
-import resume from '../assets/resume/UmangaStha.pdf';
+import resume from '../assets/resume/updatedResume.pdf';
 
 const About = () => {
   const theme = useTheme();
