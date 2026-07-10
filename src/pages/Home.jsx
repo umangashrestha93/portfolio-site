@@ -140,6 +140,54 @@ const Home = () => {
       minHeight: '100vh',
       background: 'transparent', // The 3D Canvas sits behind this
     }}>
+      {/* React 19 Native Head Metadata Hoisting */}
+      <title>Umanga Shrestha | Software Developer</title>
+      <meta name="description" content="Hi, I'm Umanga Shrestha. I engineer scalable web and mobile applications with obsessive attention to detail, using React, React Native, and Next.js." />
+      <meta name="keywords" content="Umanga Shrestha, Umanga, Shrestha, Software Developer, React Developer, React Native Developer, Mobile Developer, Frontend Engineer, Portfolio" />
+      <meta name="author" content="Umanga Shrestha" />
+      <meta name="robots" content="index, follow" />
+      <link rel="canonical" href="https://umangastha.com.np/" />
+
+      {/* Open Graph / Facebook */}
+      <meta property="og:type" content="website" />
+      <meta property="og:url" content="https://umangastha.com.np/" />
+      <meta property="og:title" content="Umanga Shrestha | Software Developer" />
+      <meta property="og:description" content="Hi, I'm Umanga Shrestha. I engineer scalable web and mobile applications with obsessive attention to detail, using React, React Native, and Next.js." />
+      <meta property="og:image" content="https://umangastha.com.np/og-image.jpg" />
+
+      {/* Twitter */}
+      <meta property="twitter:card" content="summary_large_image" />
+      <meta property="twitter:url" content="https://umangastha.com.np/" />
+      <meta property="twitter:title" content="Umanga Shrestha | Software Developer" />
+      <meta property="twitter:description" content="Hi, I'm Umanga Shrestha. I engineer scalable web and mobile applications with obsessive attention to detail, using React, React Native, and Next.js." />
+      <meta property="twitter:image" content="https://umangastha.com.np/og-image.jpg" />
+
+      {/* Structured Data (JSON-LD) */}
+      <script type="application/ld+json">
+        {JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "Person",
+          "name": "Umanga Shrestha",
+          "url": "https://umangastha.com.np/",
+          "image": "https://umangastha.com.np/og-image.jpg",
+          "jobTitle": "Software Developer",
+          "alumniOf": {
+            "@type": "EducationalOrganization",
+            "name": "Computer Science"
+          },
+          "knowsAbout": [
+            "HTML", "CSS", "JavaScript", "React", "React.js", "Next.js",
+            "React Native", "TypeScript", "Node.js", "Git", "Figma",
+            "Web Development", "Mobile Development", "MongoDB", "Express.js", "Django"
+          ],
+          "sameAs": [
+            "https://www.linkedin.com/in/umanga-shrestha-57b055212/",
+            "https://github.com/umangashrestha93",
+            "https://www.instagram.com/umanga_shrestha_/"
+          ]
+        })}
+      </script>
+
       <Header />
       {renderContents()}
       
